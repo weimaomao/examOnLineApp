@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#00a2ea">
+
+        <RelativeLayout
+            android:id="@+id/title_linear"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/back_rl"
+                android:layout_width="50dp"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@mipmap/ranger_actionbar_back" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="考试分数"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+        </RelativeLayout>
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           >
+           <TextView
+               android:id="@+id/totalScore"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="30dp"
+               android:textColor="#02B023"
+               android:textSize="100sp"
+               android:gravity="bottom"
+               android:text="99"
+               >
+           </TextView>
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="分"
+               android:layout_gravity="bottom"
+               android:textSize="20dp"
+               android:textStyle="bold"
+               ></TextView>
+       </LinearLayout>
+        <TextView
+            android:id="@+id/prepareTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="这是标题"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:textSize="16dp"
+            android:textColor="#000000"
+            ></TextView>
+
+        <TextView
+            android:id="@+id/prepareTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="考试结束，用时"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="16dp"
+            ></TextView>
+    </LinearLayout>
+
+</LinearLayout>

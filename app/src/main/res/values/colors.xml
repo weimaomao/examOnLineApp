@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffff</color>
+    <drawable name="divid">#efefef</drawable>
+
+    <drawable name="pressed_color">#fafafa</drawable>
+    <drawable name="normal_color">#fff</drawable>
+    <drawable name="pressed_red_color">#b0070e</drawable>
+    <drawable name="normal_red_color">#e6212a</drawable>
+</resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 单选按钮背景自定义效果 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_checked="true"
+        android:state_enabled="true" >
+        <shape android:shape="oval">
+            <!--边框角度-->
+            <corners android:radius="10dip" />
+            <!--框内颜色-->
+            <solid android:color="#2121BD" />
+        </shape>
+
+    </item>
+    <item  android:state_checked="false"
+        android:state_enabled="true" >
+        <shape android:shape="oval">
+            <!--边框角度-->
+            <corners android:radius="10dip" />
+            <stroke android:width="1dip" android:color="#5E5D5D" />
+            <!--外边框颜色-->
+            <solid android:color="#FFFFFF" />
+        </shape>
+    </item>
+</selector>

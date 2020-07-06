@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+ 	android:paddingLeft="10dp"
+ 	android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+     >
+    <CheckedTextView
+        android:id="@+id/ctv_name"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/radio_bg"
+        android:gravity="center"
+        android:text="A"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_option"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:text="此处是选项描述" />
+
+</LinearLayout>

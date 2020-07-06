@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 单选按钮背景自定义效果 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:state_enabled="true" >
+        <shape android:shape="rectangle">
+            <!--边框角度-->
+            <corners android:radius="3dip" />
+            <stroke android:width="1dip" android:color="#5E5D5D" />
+            <!--外边框颜色-->
+            <solid android:color="#0099FF" />
+        </shape>
+    </item>
+</selector>
