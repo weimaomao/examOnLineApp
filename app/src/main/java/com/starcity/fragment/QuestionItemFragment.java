@@ -102,7 +102,11 @@ public class QuestionItemFragment extends Fragment {
                     String studentAnswer = answers.get(0);
                     //这个答案是正确的
                     if (studentAnswer.equals(qbQuestionOption.getSort())) {
+                        questionBean.setBingo(true);
                         questionBean.setStudentScore(questionBean.getScore());
+                    } else {
+                        questionBean.setBingo(false);
+                        questionBean.setStudentScore(0D);
                     }
                     qbQuestionDao.update(questionBean);
                 }
@@ -130,8 +134,11 @@ public class QuestionItemFragment extends Fragment {
                     boolean bingo = answers.containsAll(studentAnswers);
                     if (bingo) {
                         questionBean.setStudentScore(questionBean.getScore());
+                    } else {
+                        questionBean.setBingo(false);
+                        questionBean.setStudentScore(0D);
                     }
-                    questionBean.setStudentAnswers(studentAnswers.size()==0?null:studentAnswers);
+                    questionBean.setStudentAnswers(studentAnswers.size() == 0 ? null : studentAnswers);
                     qbQuestionDao.update(questionBean);
                 }
             });

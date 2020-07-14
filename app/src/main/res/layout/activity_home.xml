@@ -46,17 +46,18 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:focusable="true" android:gravity="center"
+                android:focusable="true"
+                android:gravity="center"
                 android:orientation="vertical"
                 android:padding="5dp">
 
-                <TextView
+                <ImageView
                     android:id="@+id/prepare"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/alarm"
-                    android:textColor="#36b3e1"
-                    android:textSize="30sp"  />
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/prepare_selected"
+                    android:layout_marginBottom="3dp"
+                      />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -76,13 +77,13 @@
                 android:orientation="vertical"
                 android:padding="5dp">
 
-                <TextView
+                <ImageView
                     android:id="@+id/naviga"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/naviga"
-                    android:textColor="#777"
-                    android:textSize="30sp" />
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/history"
+                    android:layout_marginBottom="3dp"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -102,13 +103,13 @@
                 android:orientation="vertical"
                 android:padding="5dp">
 
-                <TextView
+                <ImageView
                     android:id="@+id/me"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/me"
-                    android:textColor="#777"
-                    android:textSize="30sp"/>
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/me"
+                    android:layout_marginBottom="3dp"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"

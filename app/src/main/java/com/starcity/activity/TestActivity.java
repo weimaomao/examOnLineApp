@@ -67,6 +67,7 @@ public class TestActivity extends BaseActivity implements Callback<RResult<QbPap
     private ViewPagerItemAdapter pagerAdapter;
     private Context context;
     private TextView submitPapers;
+    private boolean isSubmit = false;
 
     /**
      * 当前题目下标
@@ -90,18 +91,8 @@ public class TestActivity extends BaseActivity implements Callback<RResult<QbPap
         public void handleMessage(Message msg) {
             if (minute == 0) {
                 if (second == 0) {
-                    tv_timer.setText("正在提交!");
-                    if (timer != null) {
-                        timer.cancel();
-                        timer = null;
-                    }
-                    if (timerTask != null) {
-                        timerTask = null;
-                    }
-                    minute = -1;
-                    second = -1;
-                    submitPapers();
-                } else {
+                    shutdownTimer();
+                } else if (second > 0) {
                     second--;
                     if (second >= 10) {
                         tv_timer.setText("0" + minute + ":" + second);
@@ -111,8 +102,10 @@ public class TestActivity extends BaseActivity implements Callback<RResult<QbPap
                     if (second == 10 * 60) {
                         Toast.makeText(TestActivity.this, "距离考试结束还有十分钟！", Toast.LENGTH_SHORT).show();
                     }
+                } else {
+                    shutdownTimer();
                 }
-            } else {
+            } else if (minute > 0) {
                 if (second == 0) {
                     second = 59;
                     minute--;
@@ -121,7 +114,7 @@ public class TestActivity extends BaseActivity implements Callback<RResult<QbPap
                     } else {
                         tv_timer.setText("0" + minute + ":" + second);
                     }
-                } else {
+                } else if (second > 0) {
                     second--;
                     if (second >= 10) {
                         if (minute >= 10) {
@@ -137,6 +130,8 @@ public class TestActivity extends BaseActivity implements Callback<RResult<QbPap
                         }
                     }
                 }
+            }else{
+                shutdownTimer();
             }
         }
     };
@@ -145,6 +140,21 @@ public class TestActivity extends BaseActivity implements Callback<RResult<QbPap
     private QbQuestionDao qbQuestionDao;
     private QbQuestionOptionDao qbQuestionOptionDao;
 
+    private void shutdownTimer() {
+        if (!isSubmit) {
+            tv_timer.setText("正在提交!");
+            if (timer != null) {
+                timer.cancel();
+                timer = null;
+            }
+            if (timerTask != null) {
+                timerTask = null;
+            }
+            minute = -1;
+            second = -1;
+            submitPapers();
+        }
+    }
 
     @Override
     protected void initData() {
@@ -154,31 +164,6 @@ public class TestActivity extends BaseActivity implements Callback<RResult<QbPap
         String paperId = intent.getStringExtra("paperId");
         Call<RResult<QbPaper>> papers = retrofitService.getPapers(paperId);
         papers.enqueue(this);
-
-        //再次获取用户状态
-        Call<RResult<Integer>> uptimePaper = retrofitService.getUptimePaper(paperId);
-        uptimePaper.enqueue(new Callback<RResult<Integer>>() {
-            @Override
-            public void onResponse(Call<RResult<Integer>> call, Response<RResult<Integer>> response) {
-                RResult<Integer> body = response.body();
-                if (body == null || body.getCode() != 200) {
-                    Toast.makeText(TestActivity.this, body == null ? "服务异常" : body.getMessage(), Toast.LENGTH_SHORT).show();
-                    finish();
-                    return;
-                }
-                //单位是秒
-                studentDuration = body.getResult();
-                //开始倒计时
-                beginTimer(studentDuration);
-            }
-
-            @Override
-            public void onFailure(Call<RResult<Integer>> call, Throwable t) {
-                System.out.println(t.getMessage());
-                Toast.makeText(TestActivity.this, "接口调用异常！", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
 
        /* mBackRl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -275,19 +260,27 @@ public class TestActivity extends BaseActivity implements Callback<RResult<QbPap
      * 提交试卷
      */
     private void submitPapers() {
+        isSubmit = true;
         List<QbQuestion> qbQuestionList = TestActivity.qbQuestionList;
-        TestActivity.qbPaper.setQuestions(qbQuestionList);
         BigDecimal totalScore = new BigDecimal(0);
         for (int i = 0; i < qbQuestionList.size(); i++) {
             QbQuestion qbQuestion = qbQuestionList.get(i);
-            totalScore = NumberUtil.add(totalScore, qbQuestion.getStudentScore());
+            //如果是没有选中则设置为错误
+            if (qbQuestion.getBingo() == null) {
+                qbQuestion.setBingo(false);
+                qbQuestion.setStudentScore(0D);
+            } else if (qbQuestion.getBingo()) {
+                totalScore = NumberUtil.add(totalScore, qbQuestion.getStudentScore());
+            }
         }
+        TestActivity.qbPaper.setQuestions(qbQuestionList);
         //计算用户的总分
         TestActivity.qbPaper.setStudentTotalScore(totalScore.doubleValue());
         Call<RResult> rResultCall = retrofitService.submitPapers(TestActivity.qbPaper.getId(), TestActivity.qbPaper);
         rResultCall.enqueue(new Callback<RResult>() {
             @Override
             public void onResponse(Call<RResult> call, Response<RResult> response) {
+                isSubmit = false;
                 RResult body = response.body();
                 if (body == null || body.getCode() != 200) {
                     Toast.makeText(TestActivity.this, body == null ? "服务异常" : body.getMessage(), Toast.LENGTH_SHORT).show();
@@ -398,6 +391,10 @@ public class TestActivity extends BaseActivity implements Callback<RResult<QbPap
         //设置下方题按钮
         chooseQuestionAdapter = new ChooseQuestionAdapter(this, questionList.size(), viewPager);
         gv_all.setAdapter(chooseQuestionAdapter);
+        //获取用户的剩余时间单位是秒
+        studentDuration = qbPaper.getUptime();
+        //开始倒计时
+        beginTimer(studentDuration);
     }
 
     /**
@@ -407,8 +404,8 @@ public class TestActivity extends BaseActivity implements Callback<RResult<QbPap
      */
     private void beginTimer(int duration) {
         if (minute == -1 && second == -1) {
-            minute = duration/60;
-            second = duration%60;
+            minute = duration / 60;
+            second = duration % 60;
         }
 
         tv_timer.setText(minute + ":" + second);

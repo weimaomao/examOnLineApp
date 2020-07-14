@@ -65,7 +65,7 @@ public class ConfirmTestActivity extends BaseActivity {
                     tv_tips.setText(Html.fromHtml("<font color='#FF0000'>" + body.getMessage() + "</font>"));
                     return;
                 }
-                tv_tips.setText(Html.fromHtml("1.距离本场考试结束考试还有<font color='#FF0000'>" + (body.getResult()%60) + "</font>分钟，结束将自动提交试卷，请合理安排时间。<br/>2.参加本场考试请点击\"开始考试\"。"));
+                tv_tips.setText(Html.fromHtml("1.距离本场考试结束考试还有<font color='#FF0000'>" + (body.getResult()/60) + "</font>分钟，结束将自动提交试卷，请合理安排时间。<br/>2.参加本场考试请点击\"开始考试\"。"));
                 //设置已阅读可用
                 cb_read_tips.setEnabled(true);
             }

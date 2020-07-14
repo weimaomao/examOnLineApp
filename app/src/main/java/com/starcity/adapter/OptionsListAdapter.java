@@ -15,6 +15,8 @@ import com.starcity.activity.TestActivity;
 import com.starcity.entity.QbQuestion;
 import com.starcity.entity.QbQuestionOption;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class OptionsListAdapter extends BaseAdapter {
@@ -30,7 +32,15 @@ public class OptionsListAdapter extends BaseAdapter {
         this.qbQuestion = qbQuestion;
         this.lv = lv;
         this.index = index;
-        options = qbQuestion.getOptions();
+        //试题排序一下
+        List<QbQuestionOption> optionsList = qbQuestion.getOptions();
+        Collections.sort(optionsList, new Comparator<QbQuestionOption>() {
+            @Override
+            public int compare(QbQuestionOption qbQuestionOption1, QbQuestionOption qbQuestionOption2) {
+                return  qbQuestionOption1.getSort().compareTo(qbQuestionOption2.getSort());
+            }
+        });
+        this.options = optionsList;
     }
 
     public int getCount() {
@@ -72,18 +82,11 @@ public class OptionsListAdapter extends BaseAdapter {
 
         //如果有默认选中则进行设置一下勾选
         List<String> studentAnswers = qbQuestion.getStudentAnswers();
-        if(qbQuestion.getTypeCode().equals("tmlx_ddt")){
-            System.out.println("dxt");
-        }
         String sort = options.get(position).getSort();
         if (studentAnswers != null && studentAnswers.size() != 0 && studentAnswers.contains(sort)) {
             lv.setItemChecked(position, true);
         }else{
             lv.setItemChecked(position, false);
-        }
-        if(qbQuestion.getTypeCode().equals("tmlx_ddt")){
-            long[] checkedItemIds = lv.getCheckedItemIds();
-            System.out.println(checkedItemIds);
         }
         updateBackground(position, ctv);
         return view;

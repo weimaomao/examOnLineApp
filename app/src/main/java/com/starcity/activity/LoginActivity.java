@@ -256,7 +256,7 @@ public class LoginActivity extends BaseActivity implements Callback<RResult<Logi
             Toast.makeText(LoginActivity.this, body == null ? "服务异常" : body.getMessage(), Toast.LENGTH_SHORT).show();
             return;
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         LoginUserDTO result = body.getResult();
         SpUtils.saveString(SpUtils.TOKEN,result.getToken(),false);
         UserInfo user = result.getUser();

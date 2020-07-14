@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -40,9 +41,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayout prepareL;
     private LinearLayout testedL;
 
-    private TextView meTx;
-    private TextView prepareTx;
-    private TextView testedTx;
+    private ImageView meImage;
+    private ImageView prepareImage;
+    private ImageView testedImage;
 
     private PrepareTestFragment prepareTestFragment;//待考试fragment
     private MyInfoFragment myInfoFragment;//个人信息fragment
@@ -74,14 +75,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     protected void initID() {
 
         Typeface iconfont = Typeface.createFromAsset(getAssets(), "iconfont/iconfont.ttf");
-        meTx = (TextView) findViewById(R.id.me);
-        meTx.setTypeface(iconfont);
+        meImage = (ImageView) findViewById(R.id.me);
 
-        prepareTx = (TextView) findViewById(R.id.prepare);
-        prepareTx.setTypeface(iconfont);
+        prepareImage = (ImageView) findViewById(R.id.prepare);
 
-        testedTx = (TextView) findViewById(R.id.naviga);
-        testedTx.setTypeface(iconfont);
+        testedImage = (ImageView) findViewById(R.id.naviga);
 
         myInfoL = (LinearLayout) findViewById(R.id.meL);
         prepareL = (LinearLayout) findViewById(R.id.prepareL);
@@ -116,26 +114,26 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.meL:
-                meTx.setTextColor(0xff36b3e1);
-                prepareTx.setTextColor(0xff777777);
-                testedTx.setTextColor(0xff777777);
-
+                meImage.setBackgroundResource(R.drawable.me_selected);
+                testedImage.setBackgroundResource(R.drawable.history);
+                prepareImage.setBackgroundResource(R.drawable.prepare);
                 ft = fm.beginTransaction();
                 ft.replace(R.id.Layout_main, myInfoFragment);
                 ft.commit();
                 break;
             case R.id.prepareL:
-                prepareTx.setTextColor(0xfff41816);
-                meTx.setTextColor(0xff777777);
-                testedTx.setTextColor(0xff777777);
+                meImage.setBackgroundResource(R.drawable.me);
+                testedImage.setBackgroundResource(R.drawable.history);
+                prepareImage.setBackgroundResource(R.drawable.prepare_selected);
+
                 ft = fm.beginTransaction();
                 ft.replace(R.id.Layout_main, prepareTestFragment);
                 ft.commit();
                 break;
             case R.id.testedL:
-                testedTx.setTextColor(0xff36b3e1);
-                meTx.setTextColor(0xff777777);
-                prepareTx.setTextColor(0xff777777);
+                meImage.setBackgroundResource(R.drawable.me);
+                testedImage.setBackgroundResource(R.drawable.history_selected);
+                prepareImage.setBackgroundResource(R.drawable.prepare);
                 ft = fm.beginTransaction();
                 ft.replace(R.id.Layout_main, testedFragment);
                 ft.commit();

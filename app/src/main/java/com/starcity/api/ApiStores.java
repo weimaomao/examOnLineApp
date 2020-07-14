@@ -74,7 +74,7 @@ public interface ApiStores {
 
 
     /**
-     * 获取试卷
+     * 提交试卷
      */
     @PUT("examInfos/papers/{paperId}")
     Call<RResult> submitPapers(@Path("paperId") String paperId,@Body QbPaper qbPaper);
